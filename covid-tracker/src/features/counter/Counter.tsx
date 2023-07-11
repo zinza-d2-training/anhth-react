@@ -6,15 +6,12 @@ import { useAppSelector, useAppDispatch } from '../../hook'
 import { increment, decrement, incrementByAmount } from './counterSlice'
 
 export function Counter() {
-  // The `state` arg is correctly typed as `RootState` already
   const count = useAppSelector((state) => state.counter.value)
   const [number, setNumber] = useState(0)
   const dispatch = useAppDispatch()
-  // Sử dụng action incrementByAmount
   const handleIncrementByAmount = () => {
-    dispatch(incrementByAmount(number)); // Thay số tương ứng textfiled bằng giá trị tùy ý
+    dispatch(incrementByAmount(number));
   };
-  // omit rendering logic
    return (
     <>
       <Button variant="outlined" size="small" onClick={() => dispatch(decrement())}>-</Button>
