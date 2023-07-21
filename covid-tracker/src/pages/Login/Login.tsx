@@ -138,7 +138,7 @@ export default function Login() {
                   textTransform: 'none',
                   fontWeight: '700'
                 }}
-                disabled={!isValid ? true : false}>
+                disabled={!isValid || loading ? true : false}>
                 Đăng nhập
               </Button>
               {isError ? (
