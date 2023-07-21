@@ -6,7 +6,7 @@ export default function AuthLayout() {
     <Grid
       item
       xs={false}
-      sm={4}
+      sm={5}
       md={6}
       sx={{
         backgroundImage: `url(${imageLogin})`,

@@ -15,7 +15,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { forgotSchema } from '../../validations/validationSchema';
 import PageLoading from '../../components/PageLoading/PageLoading';
-import InputController from '../../components/InputController/InputController';
+import InputController from '../../components/InputController';
 import { ButtonActive, ButtonCancel } from '../../style/styleButton';
 
 export type ForgotDataType = {
@@ -41,7 +41,7 @@ export default function ForgotPassword() {
   const onSubmit: SubmitHandler<ForgotDataType> = (data) => {
     setTimeout(() => {
       setLoading(false);
-      navigate('/');
+      navigate('/portal/login-organ');
     }, 2000);
     setLoading(true);
   };
