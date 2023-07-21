@@ -113,7 +113,7 @@ export default function ForgotPassword() {
                 sx={{
                   ...ButtonActive
                 }}
-                disabled={!isValid ? true : false}>
+                disabled={!isValid || loading ? true : false}>
                 GỬI
               </Button>
             </Stack>
