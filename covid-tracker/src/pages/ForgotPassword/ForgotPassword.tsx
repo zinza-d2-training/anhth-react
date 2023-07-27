@@ -13,9 +13,9 @@ import AuthLayout from '../../components/AuthLayout/AuthLayout';
 import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { forgotSchema } from '../../validations/validationSchema';
+import { forgotSchema } from '../../validations/validationAuthSchema';
 import PageLoading from '../../components/PageLoading/PageLoading';
-import InputController from '../../components/InputController';
+import InputController from '../../components/ReuseComponent/InputController';
 import { ButtonActive, ButtonCancel } from '../../style/styleButton';
 
 export type ForgotDataType = {
