@@ -1,6 +1,5 @@
 import { AppBar, Box, Toolbar, Typography, Button, Stack } from '@mui/material';
 import React from 'react';
-import { ButtonActive } from '../../style/styleButton';
 import LogoCovid from '../../assets/img/Logo.png';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PeopleIcon from '@mui/icons-material/People';

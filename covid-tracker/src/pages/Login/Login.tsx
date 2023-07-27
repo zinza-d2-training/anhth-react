@@ -18,7 +18,7 @@ import { useAppDispatch } from '../../hook';
 import { userLogin } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
-import InputController from '../../components/InputController/InputController';
+import InputController from '../../components/InputController';
 
 export type LoginDataType = {
   email: string;
@@ -116,7 +116,7 @@ export default function Login() {
                   to={'/portal/password-forgot'}
                   style={{ textDecoration: 'none' }}>
                   <Link
-                    component = "span"
+                    component="span"
                     sx={{
                       fontSize: '14px',
                       textDecoration: 'none',
@@ -138,7 +138,7 @@ export default function Login() {
                   textTransform: 'none',
                   fontWeight: '700'
                 }}
-                disabled={!isValid ? true : false}>
+                disabled={!isValid || loading ? true : false}>
                 Đăng nhập
               </Button>
               {isError ? (
@@ -151,23 +151,25 @@ export default function Login() {
               <Typography>
                 Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký !
               </Typography>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  fontWeight: '900',
-                  backgroundColor: 'white',
-                  border: '1px solid #9CCC65',
-                  color: '#9CCC65',
-                  '&:hover': {
-                    backgroundColor: '#66BB6A',
-                    color: 'white'
-                  },
-                  textTransform: 'none'
-                }}>
-                Đăng ký
-              </Button>
+              <RouterLink to="/portal/register-organ" style={{ width: '100%' }}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    fontWeight: '900',
+                    backgroundColor: 'white',
+                    border: '1px solid #9CCC65',
+                    color: '#9CCC65',
+                    '&:hover': {
+                      backgroundColor: '#66BB6A',
+                      color: 'white'
+                    },
+                    textTransform: 'none'
+                  }}>
+                  Đăng ký
+                </Button>
+              </RouterLink>
             </Stack>
           </Box>
         </Grid>
