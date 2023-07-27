@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './store/userSlice';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const rootReducer = combineReducers({
   user: userSlice
@@ -9,8 +10,7 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage: storage,
-  blacklist: []
+  storage
 };
 
 const persistReducers = persistReducer(persistConfig, rootReducer);
@@ -22,6 +22,8 @@ export const store = configureStore({
       serializableCheck: false
     })
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 
