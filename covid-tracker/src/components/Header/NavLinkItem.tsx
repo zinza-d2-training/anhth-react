@@ -23,7 +23,7 @@ export default function NavLinkItem({link, title, desc, icon, color} : NavLinkIt
         padding="16px"
         spacing={1}
         alignItems="center"
-        justifyContent="center"
+        // justifyContent="space-between"
         sx={{
           '&:hover': {
             backgroundColor: 'rgb(250, 249, 249)',
@@ -36,10 +36,11 @@ export default function NavLinkItem({link, title, desc, icon, color} : NavLinkIt
             backgroundColor: '#EDE7F6',
             color: {color},
             marginRight: '16px',
+            padding: '6px' 
           }}>
           {icon}
         </Box>
-        <Box>
+        <Box sx ={{flex: 1}}>
           <Typography>{title}</Typography>
           <Typography fontSize="small">
             {desc}

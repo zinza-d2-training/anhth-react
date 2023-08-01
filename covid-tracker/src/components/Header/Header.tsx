@@ -1,5 +1,12 @@
-import { AppBar, Box, Toolbar, Typography, Button, Stack } from '@mui/material';
-import React from 'react';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  Stack,
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import LogoCovid from '../../assets/img/Logo.png';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PeopleIcon from '@mui/icons-material/People';
@@ -12,11 +19,37 @@ import {
   bindHover
 } from 'material-ui-popup-state/hooks';
 import NavLinkItem from './NavLinkItem';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import BadgeIcon from '@mui/icons-material/Badge';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { blue, green, orange } from '@mui/material/colors';
+import { UserDataType } from '../../store/userSlice';
 export default function Headers() {
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'demoPopover'
   });
+  const userState = usePopupState({
+    popupId: 'services',
+    variant: 'popover'
+  });
+  const [getUserData, setUserData] = useState<UserDataType | undefined>();
+  useEffect(() => {
+    const persistedDataString = localStorage.getItem('persist:root');
+    if (!persistedDataString) return;
+    const persistedData = JSON.parse(persistedDataString);
+    const getUserData: UserDataType | undefined = JSON.parse(
+      persistedData.user
+    );
+    setUserData(getUserData);
+    // Tiếp tục xử lý persistedData nếu cần thiết
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('persist:root');
+    setUserData(undefined);
+  };
   return (
     <>
       <AppBar
@@ -63,7 +96,7 @@ export default function Headers() {
             <Link
               underline="none"
               component="button"
-              {...bindHover(popupState)}
+              {...bindHover(userState)}
               sx={{
                 color: 'white',
                 fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`
@@ -85,7 +118,7 @@ export default function Headers() {
               </Box>
             </Link>
             <HoverPopover
-              {...bindPopover(popupState)}
+              {...bindPopover(userState)}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center'
@@ -94,7 +127,7 @@ export default function Headers() {
                 vertical: 'top',
                 horizontal: 'center'
               }}
-              sx={{ padding: '16px 0' }}>
+              >
               <NavLinkItem
                 link="/portal/search"
                 title="Tra cứu chứng nhận tiêm"
@@ -120,24 +153,108 @@ export default function Headers() {
               underline="none">
               Tài liệu
             </Link>
-            <RouterLink to={'/portal/login-organ'}>
-              <Button
-                type="submit"
-                fullWidth
-                sx={{
-                  fontWeight: '600',
-                  minWidth: '90px',
-                  color: '#303F9F',
-                  border: '1px solid #303F9F',
-                  backgroundColor: 'white',
-                  '&:hover': {
+            {getUserData ? (
+              <>
+                <Button
+                  variant="text"
+                  sx={{
+                    textTransform: 'none',
                     color: 'white',
-                    backgroundColor: '#303F9F',
-                  }
-                }}>
-                ĐĂNG NHẬP
-              </Button>
-            </RouterLink>
+                    fontWeight: 500
+                  }}
+                  {...bindHover(popupState)}>
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {getUserData?.firstName}
+                  </Typography>
+                </Button>
+                <HoverPopover
+                  {...bindPopover(popupState)}
+                  disableScrollLock={true}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center'
+                  }}>
+                  <Box
+                    sx={{
+                      padding: '16px 0px',
+                      borderRadius: '12px'
+                    }}>
+                    <NavLinkItem
+                      title="Tài khoản"
+                      desc="Thông tin cá nhân"
+                      link="/portal/account"
+                      icon={<BadgeIcon />}
+                      color={blue[600]}
+                    />
+                    <NavLinkItem
+                      title="Quản trị viên"
+                      desc="Quyền với quản trị viên"
+                      link="/admin/vaccination-registration"
+                      icon={<AdminPanelSettingsIcon />}
+                      color={green[600]}
+                    />
+                    <Stack
+                      direction="row"
+                      margin="0 24px"
+                      padding="16px"
+                      spacing={1}
+                      alignItems="center"
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: 'rgb(250, 249, 249)',
+                          cursor: 'pointer'
+                        }
+                      }}
+                      onClick={handleLogout}>
+                      <Box
+                        sx={{
+                          borderRadius: '6px',
+                          backgroundColor: '#EDE7F6',
+                          color: orange[600],
+                          marginRight: '16px',
+                          padding: '6px'
+                        }}>
+                        <LogoutIcon />
+                      </Box>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography>Đăng xuất</Typography>
+                        <Typography fontSize="small">
+                          Đăng xuất khỏi hệ thống
+                        </Typography>
+                      </Box>
+                      <ArrowForwardIcon
+                        sx={{
+                          color: orange[600]
+                        }}
+                      />
+                    </Stack>
+                  </Box>
+                </HoverPopover>
+              </>
+            ) : (
+              <RouterLink to={'/portal/login-organ'}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  sx={{
+                    fontWeight: '600',
+                    minWidth: '90px',
+                    color: '#303F9F',
+                    border: '1px solid #303F9F',
+                    backgroundColor: 'white',
+                    '&:hover': {
+                      color: 'white',
+                      backgroundColor: '#303F9F'
+                    }
+                  }}>
+                  ĐĂNG NHẬP
+                </Button>
+              </RouterLink>
+            )}
           </Stack>
         </Toolbar>
       </AppBar>
