@@ -14,10 +14,10 @@ import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerSchema } from '../../validations/validationAuthSchema';
 import PageLoading from '../../components/PageLoading/PageLoading';
-import InputController from '../../components/ReuseComponent/InputController';
+import { InputController } from '../../components/ReuseComponent/InputController';
 import { ButtonCancel } from '../../style/styleButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import DateController from '../../components/ReuseComponent/DateController';
+import { DateController } from '../../components/ReuseComponent/DateController';
 import { SelectorController } from '../../components/ReuseComponent/SelectorController';
 import { provinces } from '../../api/provinceAPI.js';
 
@@ -61,9 +61,9 @@ export default function Register() {
   });
 
   const onSubmit: SubmitHandler<RegisterDataType> = (data) => {
-    console.log(data);
     setTimeout(() => {
       setLoading(false);
+      console.log(data);
       navigate('/portal/login-organ');
     }, 2000);
     setLoading(true);
@@ -82,7 +82,6 @@ export default function Register() {
         return province.code === selectedProvince;
       });
       if (province) {
-        console.log(province.districts);
         return province.districts;
       }
       return [];
@@ -104,7 +103,6 @@ export default function Register() {
         return district.code === selectedDistrict;
       });
       if (district) {
-        console.log(district.wards);
         return district.wards;
       }
       return [];
@@ -112,7 +110,7 @@ export default function Register() {
     const options = getWardOptions();
     setWardOption(options);
   }, [changeDistrictWatch, getValues, WardOption]);
-  
+
   return (
     <>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -154,8 +152,7 @@ export default function Register() {
               sx={{
                 fontWeight: 700,
                 fontSize: '30px'
-              }}
-              onClick={() => console.log(errors)}>
+              }}>
               Đăng ký tài khoản
             </Typography>
             <Box sx={{ width: '100%' }}>

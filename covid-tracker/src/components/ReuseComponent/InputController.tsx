@@ -1,23 +1,24 @@
 import { TextField, Typography, Box } from '@mui/material';
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
-interface InputType {
+
+interface InputType<FieldsType extends FieldValues> {
   type: string;
-  name: string;
-  control?: any;
-  helperText?: any;
+  name: Path<FieldsType>;
+  control?: Control<FieldsType>;
+  helperText?: string;
   placeholder?: string;
   typography?: string;
 }
-export default function InputController({
+export const InputController = <FieldsType extends FieldValues>({
   type,
   helperText,
   name,
   control,
   placeholder,
   typography
-}: InputType) {
+}: InputType<FieldsType>) => {
   return (
     <Controller
       render={({ field: { ...field }, fieldState: { error } }) => (
@@ -54,4 +55,4 @@ export default function InputController({
       control={control}
     />
   );
-}
+};

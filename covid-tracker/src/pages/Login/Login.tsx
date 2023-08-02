@@ -18,7 +18,7 @@ import { useAppDispatch } from '../../hook';
 import { userLogin } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
-import InputController from '../../components/ReuseComponent/InputController';
+import { InputController } from '../../components/ReuseComponent/InputController';
 
 export type LoginDataType = {
   email: string;
@@ -87,8 +87,7 @@ export default function Login() {
                 sx={{
                   fontWeight: 700,
                   fontSize: '30px'
-                }}
-                onClick={() => console.log(errors)}>
+                }}>
                 Đăng nhập vào tài khoản
               </Typography>
               <Box sx={{ width: '100%' }}>

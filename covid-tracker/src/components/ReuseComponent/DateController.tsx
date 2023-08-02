@@ -1,20 +1,20 @@
 import { Typography, Box } from '@mui/material';
-import { Controller } from 'react-hook-form';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers/';
+import { Controller, FieldValues, UseControllerProps } from 'react-hook-form';
+import { DatePicker } from '@mui/x-date-pickers/';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-interface DateItemType {
-  name: string;
-  control: any;
-  helperText?: any;
+interface DateItemType<FieldsType extends FieldValues>
+  extends UseControllerProps<FieldsType> {
+  helperText?: string;
   typography: string;
 }
-export default function DateController({
+export const DateController = <FieldsType extends FieldValues> ({
   name,
   control,
   typography,
   helperText
-}: DateItemType) {
+}: DateItemType<FieldsType>) => {
   return (
     <Controller
       name={name}
@@ -31,25 +31,27 @@ export default function DateController({
               ''
             )}
           </Typography>
-          <DatePicker
-            slotProps={{
-              textField: {
-                error: !!error,
-                helperText: helperText,
-                FormHelperTextProps: {
-                  style: {
-                    marginLeft: 0,
-                    color: 'red'
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              {...field}
+              slotProps={{
+                textField: {
+                  error: !!error,
+                  helperText: helperText,
+                  FormHelperTextProps: {
+                    style: {
+                      marginLeft: 0,
+                      color: 'red'
+                    }
                   }
                 }
-              }
-            }}
-            sx={{ width: '100%', margin: '10px 0' }}
-            {...field}
-            inputRef={ref}
-          />
+              }}
+              sx={{ width: '100%', margin: '10px 0' }}
+              inputRef={ref}
+            />
+          </LocalizationProvider>
         </>
       )}
     />
   );
-}
+};

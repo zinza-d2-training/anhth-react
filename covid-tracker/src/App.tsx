@@ -5,12 +5,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import Home from './pages/UserPage/Home/Home';
 import Register from './pages/Register/Register';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="App">
         {
           <BrowserRouter>
@@ -26,7 +23,6 @@ function App() {
           </BrowserRouter>
         }
       </div>
-    </LocalizationProvider>
   );
 }
 

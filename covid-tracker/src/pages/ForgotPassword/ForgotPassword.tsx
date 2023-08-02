@@ -15,7 +15,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { forgotSchema } from '../../validations/validationAuthSchema';
 import PageLoading from '../../components/PageLoading/PageLoading';
-import InputController from '../../components/ReuseComponent/InputController';
+import { InputController } from '../../components/ReuseComponent/InputController';
 import { ButtonActive, ButtonCancel } from '../../style/styleButton';
 
 export type ForgotDataType = {
