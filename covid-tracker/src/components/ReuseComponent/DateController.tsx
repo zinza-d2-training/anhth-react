@@ -1,5 +1,11 @@
 import { Typography, Box } from '@mui/material';
-import { Controller, FieldValues, UseControllerProps } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  Path,
+  PathValue,
+  UseControllerProps
+} from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -9,7 +15,7 @@ interface DateItemType<FieldsType extends FieldValues>
   helperText?: string;
   typography: string;
 }
-export const DateController = <FieldsType extends FieldValues> ({
+export const DateController = <FieldsType extends FieldValues>({
   name,
   control,
   typography,
@@ -19,7 +25,10 @@ export const DateController = <FieldsType extends FieldValues> ({
     <Controller
       name={name}
       control={control}
-      render={({ field: { ref, ...field }, fieldState: { error } }) => (
+      render={({
+        field: { ref, onChange, ...field },
+        fieldState: { error }
+      }) => (
         <>
           <Typography align="left">
             {typography}
@@ -34,6 +43,9 @@ export const DateController = <FieldsType extends FieldValues> ({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               {...field}
+              onChange={(value) =>
+                onChange(value as PathValue<FieldsType, Path<FieldsType>>)
+              }
               slotProps={{
                 textField: {
                   error: !!error,

@@ -63,7 +63,6 @@ export default function Register() {
   const onSubmit: SubmitHandler<RegisterDataType> = (data) => {
     setTimeout(() => {
       setLoading(false);
-      console.log(data);
       navigate('/portal/login-organ');
     }, 2000);
     setLoading(true);
