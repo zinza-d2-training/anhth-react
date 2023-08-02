@@ -12,13 +12,13 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../validations/validationSchema';
+import { loginSchema } from '../../validations/validationAuthSchema';
 import PageLoading from '../../components/PageLoading/PageLoading';
 import { useAppDispatch } from '../../hook';
 import { userLogin } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
-import InputController from '../../components/InputController';
+import { InputController } from '../../components/ReuseComponent/InputController';
 
 export type LoginDataType = {
   email: string;
@@ -87,29 +87,24 @@ export default function Login() {
                 sx={{
                   fontWeight: 700,
                   fontSize: '30px'
-                }}
-                onClick={() => console.log(errors)}>
+                }}>
                 Đăng nhập vào tài khoản
               </Typography>
               <Box sx={{ width: '100%' }}>
-                <Stack>
-                  <Typography align="left">Email</Typography>
-                  <InputController
-                    type="email"
-                    helperText={errors?.email?.message}
-                    name="email"
-                    control={control}
-                  />
-                </Stack>
-                <Stack>
-                  <Typography align="left">Password</Typography>
-                  <InputController
-                    type="password"
-                    helperText={errors?.password?.message}
-                    name="password"
-                    control={control}
-                  />
-                </Stack>
+                <InputController
+                  type="email"
+                  helperText={errors?.email?.message}
+                  name="email"
+                  control={control}
+                  typography="Email"
+                />
+                <InputController
+                  type="password"
+                  helperText={errors?.password?.message}
+                  name="password"
+                  control={control}
+                  typography="Password"
+                />
               </Box>
               <Typography align="right" width="100%">
                 <RouterLink
