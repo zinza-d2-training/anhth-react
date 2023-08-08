@@ -63,7 +63,13 @@ export const data = {
 
 function LineChartStats() {
   return (
-    <Stack sx={{ padding: '24px 16px' }}>
+    <Stack
+      sx={{
+        p: '24px 16px',
+        boxShadow: 2,
+        mt: '84px',
+        borderRadius: '10px'
+      }}>
       <Typography variant="h6" fontSize={20} fontWeight={700} align="left">
         Dữ liệu tiêm theo ngày
       </Typography>
@@ -71,7 +77,7 @@ function LineChartStats() {
         <Box
           width={48}
           height={17}
-          sx={{ backgroundColor: '#281BA4', marginRight: '5px' }}></Box>
+          sx={{ backgroundColor: '#281BA4', mr: '5px' }}></Box>
         <Typography>Đã Tiêm</Typography>
       </Stack>
       <Line options={options} data={data} />

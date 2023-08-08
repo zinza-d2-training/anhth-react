@@ -16,8 +16,10 @@ interface RHFAutocompleteFieldProps<
   name: Path<TField>;
   selectors: O[];
   placeholder?: string;
-  helperText: string | undefined;
-  typography: string;
+  helperText?: string | undefined;
+  typography?: string;
+  size?: 'small';
+  required?: boolean;
 }
 
 export const SelectorController = <
@@ -26,7 +28,16 @@ export const SelectorController = <
 >(
   props: RHFAutocompleteFieldProps<O, TField>
 ) => {
-  const { control, selectors, name, helperText, typography } = props;
+  const {
+    control,
+    selectors,
+    name,
+    helperText,
+    typography,
+    placeholder,
+    size,
+    required
+  } = props;
   return (
     <Controller
       name={name}
@@ -35,16 +46,21 @@ export const SelectorController = <
         const { onChange, value, ref } = field;
         return (
           <>
-            <Typography align="left">
-              {typography}
-              {error ? (
-                <Box component="span" sx={{ color: 'red' }}>
-                  {` `}(*)
-                </Box>
-              ) : (
-                ''
-              )}
-            </Typography>
+            {required ? (
+              <Typography align="left">
+                {typography}
+                {error ? (
+                  <Box component="span" sx={{ color: 'red' }}>
+                    {` `}(*)
+                  </Box>
+                ) : (
+                  ''
+                )}
+              </Typography>
+            ) : (
+              <></>
+            )}
+
             <Autocomplete
               value={
                 value
@@ -57,22 +73,24 @@ export const SelectorController = <
                 return option?.label || option?.name;
               }}
               onChange={(event: any, newValue: any) => {
-                onChange(newValue ? newValue.id || newValue.code : null);
+                onChange(newValue ? newValue.id || newValue.code : '');
               }}
               options={selectors}
               sx={{ width: '100%', margin: '10px 0' }}
               renderInput={(params) => (
                 <TextField
-                  required
-                  error={!!error}
-                  helperText={helperText}
-                  inputRef={ref}
+                  required={required}
                   {...params}
+                  placeholder={placeholder}
+                  error={!!error}
+                  inputRef={ref}
+                  size={size}
+                  helperText={helperText ? true : null}
                   FormHelperTextProps={{
-                    style: {
-                      marginLeft: 0,
-                      color: 'red'
-                    }
+                    style:
+                      helperText === ''
+                        ? { marginLeft: 0, color: 'red' }
+                        : { marginLeft: 0, color: 'black' }
                   }}
                 />
               )}

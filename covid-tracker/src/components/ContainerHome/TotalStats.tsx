@@ -30,15 +30,15 @@ const ItemType: FC<ItemTypeProps> = ({ iconUrl, unit, label, quantity }) => {
         />
         <Stack>
           <Typography fontWeight="700">{label}</Typography>
-          <Typography
+          <Box
             sx={{ textAlign: 'left !important' }}
             fontSize="28px"
             fontWeight="700">
             {quantity.toLocaleString()}
-            <Box fontSize="13px" display="inline" fontStyle="italic">
+            <Typography fontSize="13px" display="inline" fontStyle="italic">
               {unit}
-            </Box>
-          </Typography>
+            </Typography>
+          </Box>
         </Stack>
       </Stack>
     </>
