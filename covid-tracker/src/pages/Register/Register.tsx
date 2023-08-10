@@ -190,6 +190,7 @@ export default function Register() {
                 control={control}
               />
               <SelectorController
+                required
                 selectors={[
                   { id: 'M', label: 'Nam' },
                   { id: 'F', label: 'Nữ' }
@@ -200,6 +201,7 @@ export default function Register() {
                 name="gender"
               />
               <SelectorController
+                required
                 helperText={errors?.province?.message}
                 control={control}
                 selectors={provinces}
@@ -207,6 +209,7 @@ export default function Register() {
                 name="province"
               />
               <SelectorController
+                required
                 helperText={errors?.district?.message}
                 name="district"
                 control={control}
@@ -214,6 +217,7 @@ export default function Register() {
                 typography="Quận/Huyện"
               />
               <SelectorController
+                required
                 helperText={errors?.ward?.message}
                 name="ward"
                 control={control}

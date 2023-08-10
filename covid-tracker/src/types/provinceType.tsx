@@ -1,4 +1,4 @@
-interface Ward {
+export interface Ward {
   code: number | string;
   name: string;
 }
