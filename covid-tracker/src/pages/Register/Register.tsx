@@ -20,6 +20,9 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { DateController } from '../../components/ReuseComponent/DateController';
 import { SelectorController } from '../../components/ReuseComponent/SelectorController';
 import { provinces } from '../../api/provinceAPI.js';
+import { useDispatch } from 'react-redux';
+import { userRegister } from '../../store/userSlice';
+import dayjs from 'dayjs';
 
 export type RegisterDataType = {
   email: string;
@@ -48,6 +51,7 @@ export const defaultValues: DefaultValues<RegisterDataType> = {
 export default function Register() {
   const [loading, setLoading] = useState<Boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
@@ -63,6 +67,14 @@ export default function Register() {
   const onSubmit: SubmitHandler<RegisterDataType> = (data) => {
     setTimeout(() => {
       setLoading(false);
+      const dob = dayjs(data.dob).format('DD/MM/YYYY');
+      dispatch(
+        userRegister({
+          id: 1,
+          ...data,
+          dob
+        })
+      );
       navigate('/portal/login-organ');
     }, 2000);
     setLoading(true);
@@ -192,8 +204,8 @@ export default function Register() {
               <SelectorController
                 required
                 selectors={[
-                  { id: 'M', label: 'Nam' },
-                  { id: 'F', label: 'Nữ' }
+                  { value: 1, label: 'Nam' },
+                  { value: 2, label: 'Nữ' }
                 ]}
                 typography="Giới tính"
                 helperText={errors?.gender?.message}

@@ -11,7 +11,7 @@ import {
   TablePagination
 } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
-import { Ward } from '../../types/provinceType';
+import { WardType } from '../../types/provinceType';
 import TablePaginationActions from './TablePaginationActions';
 
 const useStyles = makeStyles({
@@ -24,7 +24,7 @@ type DataRowVaccinePoint = {
   id: number | string;
   name: string;
   street: string;
-  ward: Ward;
+  ward: WardType;
   district: string;
   province: string;
   headOfVaccinationCenter: string;

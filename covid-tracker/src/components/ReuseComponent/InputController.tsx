@@ -2,14 +2,14 @@ import { TextField, Typography, Box } from '@mui/material';
 import React from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
-
 interface InputType<FieldsType extends FieldValues> {
-  type: string;
+  type?: string;
   name: Path<FieldsType>;
   control?: Control<FieldsType>;
   helperText?: string;
   placeholder?: string;
   typography?: string;
+  size?: 'small' | 'medium';
 }
 export const InputController = <FieldsType extends FieldValues>({
   type,
@@ -17,7 +17,8 @@ export const InputController = <FieldsType extends FieldValues>({
   name,
   control,
   placeholder,
-  typography
+  typography,
+  size
 }: InputType<FieldsType>) => {
   return (
     <Controller
@@ -36,11 +37,13 @@ export const InputController = <FieldsType extends FieldValues>({
           <TextField
             {...field}
             margin="none"
+            error={!!error}
             type={type}
             sx={{ padding: '10px 0' }}
             fullWidth
             required
             helperText={helperText}
+            size={size}
             FormHelperTextProps={{
               style: {
                 marginLeft: 0,
