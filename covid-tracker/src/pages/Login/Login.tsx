@@ -14,11 +14,11 @@ import { DefaultValues, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../../validations/validationAuthSchema';
 import PageLoading from '../../components/PageLoading/PageLoading';
-import { useAppDispatch } from '../../hook';
-import { userLogin } from '../../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
 import { InputController } from '../../components/ReuseComponent/InputController';
+import { getDataLocal } from '../../data/getDataLocal';
+import { UserDataType } from '../../store/userSlice';
 
 export type LoginDataType = {
   email: string;
@@ -33,7 +33,6 @@ export const defaultValues: DefaultValues<LoginDataType> = {
 export default function Login() {
   const [loading, setLoading] = useState<Boolean>(false);
   const [isError, setError] = useState<Boolean>(false);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -48,15 +47,15 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginDataType> = (data) => {
     setTimeout(() => {
       setLoading(false);
-      dispatch(
-        userLogin({
-          email: data.email,
-          firstName: 'Trung Anh',
-          lastName: 'Hoàng',
-          id: 1
-        })
-      );
-      navigate('/');
+      const getData = getDataLocal();
+      if (getData === undefined) {
+        alert('Đăng ký trước khi đăng nhập');
+        return;
+      }
+      const { user } = getData;
+      const { email, password } = user;
+      if (email === data.email && password === data.password) navigate('/');
+      else alert(`Login Fail, Try fill email: ${email} password: ${password}`);
     }, 2000);
     setLoading(true);
   };

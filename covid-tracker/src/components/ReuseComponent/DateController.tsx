@@ -14,12 +14,16 @@ interface DateItemType<FieldsType extends FieldValues>
   extends UseControllerProps<FieldsType> {
   helperText?: string;
   typography: string;
+  placeholder?: string;
+  size?: 'small' | 'medium';
 }
 export const DateController = <FieldsType extends FieldValues>({
   name,
   control,
   typography,
-  helperText
+  helperText,
+  placeholder,
+  size
 }: DateItemType<FieldsType>) => {
   return (
     <Controller
@@ -48,6 +52,8 @@ export const DateController = <FieldsType extends FieldValues>({
               }
               slotProps={{
                 textField: {
+                  size: size,
+                  placeholder: placeholder,
                   error: !!error,
                   helperText: helperText,
                   FormHelperTextProps: {

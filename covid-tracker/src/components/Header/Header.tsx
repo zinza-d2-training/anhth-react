@@ -1,17 +1,10 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  Stack,
-} from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Button, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import LogoCovid from '../../assets/img/Logo.png';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import HoverPopover from 'material-ui-popup-state/HoverPopover';
 import {
   usePopupState,
@@ -26,7 +19,9 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { blue, green, orange } from '@mui/material/colors';
 import { UserDataType } from '../../store/userSlice';
+import { getDataLocal } from '../../data/getDataLocal';
 export default function Headers() {
+  const navigation = useNavigate();
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'demoPopover'
@@ -37,17 +32,14 @@ export default function Headers() {
   });
   const [getUserData, setUserData] = useState<UserDataType | undefined>();
   useEffect(() => {
-    const persistedDataString = localStorage.getItem('persist:root');
-    if (!persistedDataString) return;
-    const persistedData = JSON.parse(persistedDataString);
-    const getUserData: UserDataType | undefined = JSON.parse(
-      persistedData.user
-    );
-    setUserData(getUserData);
-    // Tiếp tục xử lý persistedData nếu cần thiết
+    const getData = getDataLocal();
+    if (getData === undefined) return;
+    const { user } = getData;
+    setUserData(user);
   }, []);
   const handleLogout = () => {
     localStorage.removeItem('persist:root');
+    navigation('/');
     setUserData(undefined);
   };
   return (
@@ -77,22 +69,24 @@ export default function Headers() {
               marginLeft: 'auto'
             }}
             spacing={2}>
-            <Link
+            <RouterLink
+              to={'/'}
               style={{
+                textDecoration: 'none',
                 color: 'white',
                 fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`
-              }}
-              underline="none">
+              }}>
               Trang chủ
-            </Link>
-            <Link
-              sx={{
+            </RouterLink>
+            <RouterLink
+              to={'/portal/vaccine-registration'}
+              style={{
+                textDecoration: 'none',
                 color: 'white',
                 fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`
-              }}
-              underline="none">
+              }}>
               Đăng ký tiêm
-            </Link>
+            </RouterLink>
             <Link
               underline="none"
               component="button"
@@ -126,8 +120,7 @@ export default function Headers() {
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'center'
-              }}
-              >
+              }}>
               <NavLinkItem
                 link="/portal/search"
                 title="Tra cứu chứng nhận tiêm"
@@ -163,8 +156,8 @@ export default function Headers() {
                     fontWeight: 500
                   }}
                   {...bindHover(popupState)}>
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    {getUserData?.firstName}
+                  <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                    {getUserData?.username}
                   </Typography>
                 </Button>
                 <HoverPopover

@@ -2,10 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './store/userSlice';
-import { PersistGate } from 'redux-persist/integration/react';
+import vaccineRegistrationSlice from './store/vaccineRegistrationSlice';
 
 const rootReducer = combineReducers({
-  user: userSlice
+  user: userSlice,
+  vaccineRegister: vaccineRegistrationSlice
 });
 
 const persistConfig = {

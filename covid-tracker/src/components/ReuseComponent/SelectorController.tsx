@@ -1,16 +1,16 @@
 import { Controller, Control, Path, FieldValues } from 'react-hook-form';
 import { TextField, Typography, Box } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Province } from '../../types/provinceType';
+import { ProvinceType } from '../../types/provinceType';
 
-interface Gender {
-  id: string | number;
+interface SelectorForm {
+  value: string | number;
   label: string;
 }
 
 interface RHFAutocompleteFieldProps<
   TField extends FieldValues,
-  O extends FieldValues = Gender | Province
+  O extends FieldValues = SelectorForm | ProvinceType
 > {
   control: Control<TField>;
   name: Path<TField>;
@@ -18,26 +18,18 @@ interface RHFAutocompleteFieldProps<
   placeholder?: string;
   helperText?: string | undefined;
   typography?: string;
-  size?: 'small';
   required?: boolean;
+  size?: 'small' | 'medium';
 }
 
 export const SelectorController = <
   TField extends FieldValues,
-  O extends FieldValues = Gender | Province
+  O extends FieldValues = SelectorForm | ProvinceType
 >(
   props: RHFAutocompleteFieldProps<O, TField>
 ) => {
-  const {
-    control,
-    selectors,
-    name,
-    helperText,
-    typography,
-    placeholder,
-    size,
-    required
-  } = props;
+  const { control, selectors, name, helperText, typography, required, size } =
+    props;
   return (
     <Controller
       name={name}
@@ -46,26 +38,21 @@ export const SelectorController = <
         const { onChange, value, ref } = field;
         return (
           <>
-            {required ? (
-              <Typography align="left">
-                {typography}
-                {error ? (
-                  <Box component="span" sx={{ color: 'red' }}>
-                    {` `}(*)
-                  </Box>
-                ) : (
-                  ''
-                )}
-              </Typography>
-            ) : (
-              <></>
-            )}
-
+            <Typography align="left">
+              {typography}
+              {error ? (
+                <Box component="span" sx={{ color: 'red' }}>
+                  {` `}(*)
+                </Box>
+              ) : (
+                ''
+              )}
+            </Typography>
             <Autocomplete
               value={
                 value
                   ? selectors.find((option) => {
-                      return value === option.id || value === option.code;
+                      return value === option.value || value === option.code;
                     }) ?? null
                   : null
               }
@@ -73,24 +60,23 @@ export const SelectorController = <
                 return option?.label || option?.name;
               }}
               onChange={(event: any, newValue: any) => {
-                onChange(newValue ? newValue.id || newValue.code : '');
+                onChange(newValue ? newValue.value || newValue.code : null);
               }}
               options={selectors}
               sx={{ width: '100%', margin: '10px 0' }}
               renderInput={(params) => (
                 <TextField
                   required={required}
-                  {...params}
-                  placeholder={placeholder}
                   error={!!error}
+                  helperText={helperText}
                   inputRef={ref}
+                  {...params}
                   size={size}
-                  helperText={helperText ? true : null}
                   FormHelperTextProps={{
-                    style:
-                      helperText === ''
-                        ? { marginLeft: 0, color: 'red' }
-                        : { marginLeft: 0, color: 'black' }
+                    style: {
+                      marginLeft: 0,
+                      color: 'red'
+                    }
                   }}
                 />
               )}

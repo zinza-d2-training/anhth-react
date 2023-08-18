@@ -1,16 +1,22 @@
-export interface Ward {
+export interface WardType {
   code: number | string;
   name: string;
 }
 
-interface District {
-  code: number | string;
+export interface DistrictType {
+  code: number;
   name: string;
-  wards?: Ward[];
+  codename?: string;
+  division_type?: string;
+  short_codename?: string;
+  wards?: WardType[];
 }
 
-export interface Province {
-  code: number | string;
+export interface ProvinceType {
+  code: number;
   name: string;
-  districts?: District[];
+  codename?: string;
+  division_type?: string;
+  phone_code?: number;
+  districts?: DistrictType[];
 }
